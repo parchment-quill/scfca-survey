@@ -1074,7 +1074,10 @@ async function submitSurvey() {
       body: JSON.stringify(payload)
     });
 
-    if (!resInsert.ok) throw new Error('Insert failed');
+    if (!resInsert.ok) {
+      const errBody = await resInsert.json().catch(() => ({}));
+      throw new Error(`Insert failed (${resInsert.status}): ${errBody.message || errBody.hint || JSON.stringify(errBody)}`);
+    }
 
     // Mark code as used
     await fetch(`${SUPABASE_URL}/rest/v1/access_codes?id=eq.${validatedCode}`, {
@@ -1090,7 +1093,7 @@ async function submitSurvey() {
     showStep('complete');
 
   } catch(err) {
-    alertEl.innerHTML = '<div class="alert alert-error">Something went wrong submitting your response. Please try again. Your answers have not been lost.</div>';
+    alertEl.innerHTML = `<div class="alert alert-error">Something went wrong: ${err.message}. Please try again. Your answers have not been lost.</div>`;
     btn.innerHTML = 'Submit My Response';
     btn.disabled = false;
   }
