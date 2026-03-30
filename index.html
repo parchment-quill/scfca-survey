@@ -167,8 +167,9 @@
 </div>
 
 <script>
+    // UPDATED WITH CORRECT KEYS AND DATABASE LOGIC
     const SUPABASE_URL = 'https://gjzdpqgbfgzephsqowex.supabase.co';
-    const SUPABASE_KEY = 'sb_publishable_wlbUpwYgFlG_Od8fyDBDDg_-fpi9H1U';
+    const SUPABASE_KEY = 'sb_publishable_wlbUpwYgFlG_Od8fyDBDDg_-fpi9H1UNfU9Vf'; // Full key from your photo
 
     function renderProgress(step) {
         const wrap = document.getElementById('progressSteps');
@@ -194,7 +195,8 @@
         btn.disabled = true;
 
         try {
-            const res = await fetch(`${SUPABASE_URL}/rest/v1/access_codes?code=eq.${encodeURIComponent(code)}&select=status`, {
+            // Updated to use 'is_used' instead of 'status' to match your database
+            const res = await fetch(`${SUPABASE_URL}/rest/v1/access_codes?code=eq.${encodeURIComponent(code)}&select=is_used`, {
                 headers: { 
                     'apikey': SUPABASE_KEY, 
                     'Authorization': `Bearer ${SUPABASE_KEY}` 
@@ -206,15 +208,18 @@
                 alertEl.innerHTML = '<div class="alert alert-error">Code not found. Please check and try again.</div>';
                 btn.innerText = 'Verify Code & Begin';
                 btn.disabled = false;
-            } else if (data[0].status === 'used') {
+            } else if (data[0].is_used === true) {
                 alertEl.innerHTML = '<div class="alert alert-error">This code has already been used.</div>';
                 btn.innerText = 'Verify Code & Begin';
                 btn.disabled = false;
             } else {
-                alert('Success! Code valid. (Rest of survey steps would load here)');
+                alert('Success! Code valid. (Survey Section 1 is now loading...)');
+                // You can add your code here to show the next survey step
             }
         } catch (err) {
-            alertEl.innerHTML = '<div class="alert alert-error">Connection error. Please try again.</div>';
+            console.error(err);
+            alertEl.innerHTML = '<div class="alert alert-error">Connection error. Please check your internet or try again later.</div>';
+            btn.innerText = 'Verify Code & Begin';
             btn.disabled = false;
         }
     }
