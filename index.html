@@ -1,141 +1,234 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Family Court Accountability Survey</title>
+    <style>
+        :root {
+            --teal: #1e6b6b;
+            --teal-light: #2a8f8f;
+            --teal-deep: #134545;
+            --gold: #b8943a;
+            --gold-light: #d4af60;
+            --ink: #1a1a2e;
+            --parchment: #faf7f0;
+            --parchment-mid: #f0ebe0;
+            --white: #ffffff;
+            --stone: #6b7280;
+            --danger: #c0392b;
+            --success: #1e6b4a;
+            --border: #d4c9b0;
+            --shadow: 0 2px 16px rgba(26,26,46,0.10);
+            --radius: 12px;
+        }
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Family Court Accountability Survey</title>
-<link href="./Family Court Accountability Survey_files/css2" rel="stylesheet">
-<style>
-:root {
-  --teal: #1e6b6b;
-  --teal-light: #2a8f8f;
-  --teal-deep: #134545;
-  --gold: #b8943a;
-  --gold-light: #d4af60;
-  --ink: #1a1a2e;
-  --parchment: #faf7f0;
-  --parchment-mid: #f0ebe0;
-  --white: #ffffff;
-  --stone: #6b7280;
-  --danger: #c0392b;
-  --success: #1e6b4a;
-  --border: #d4c9b0;
-  --shadow: 0 2px 16px rgba(26,26,46,0.10);
-  --radius: 12px;
-}
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
-* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        body {
+            font-family: Georgia, serif;
+            background: var(--parchment);
+            color: var(--ink);
+            min-height: 100vh;
+            font-size: 16px;
+            line-height: 1.6;
+        }
 
-body {
-  font-family: 'Source Serif 4', Georgia, serif;
-  background: var(--parchment);
-  color: var(--ink);
-  min-height: 100vh;
-  font-size: 16px;
-  line-height: 1.6;
-}
+        .header {
+            background: var(--teal-deep);
+            padding: 32px 20px 28px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+        }
+        .header-icon { font-size: 2rem; display: block; margin-bottom: 12px; }
+        .org-label {
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold-light);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        .header h1 {
+            font-size: 1.5rem;
+            color: #fff;
+            line-height: 1.25;
+            font-weight: 700;
+        }
 
-/* HEADER */
-.header {
-  background: var(--teal-deep);
-  padding: 32px 20px 28px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-.header::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
-}
-.header-icon { font-size: 2rem; display: block; margin-bottom: 12px; }
-.org-label {
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--gold-light);
-  margin-bottom: 10px;
-  font-weight: 600;
-}
-.header h1 {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 1.5rem;
-  color: #fff;
-  line-height: 1.25;
-  font-weight: 700;
-}
+        .progress-wrap { background: var(--teal-deep); padding: 12px 20px 16px; }
+        .progress-steps { display: flex; gap: 5px; margin-bottom: 6px; }
+        .prog-dot { height: 4px; flex: 1; border-radius: 2px; background: rgba(255,255,255,0.18); transition: background 0.3s; }
+        .prog-dot.done { background: var(--gold); }
+        .prog-dot.active { background: var(--teal-light); }
+        .progress-label { font-size: 0.72rem; color: rgba(255,255,255,0.55); letter-spacing: 0.06em; text-align: center; }
 
-/* PROGRESS */
-.progress-wrap {
-  background: var(--teal-deep);
-  padding: 12px 20px 16px;
-}
-.progress-steps {
-  display: flex;
-  gap: 5px;
-  margin-bottom: 6px;
-}
-.prog-dot {
-  height: 4px;
-  flex: 1;
-  border-radius: 2px;
-  background: rgba(255,255,255,0.18);
-  transition: background 0.3s;
-}
-.prog-dot.done { background: var(--gold); }
-.prog-dot.active { background: var(--teal-light); }
-.progress-label {
-  font-size: 0.72rem;
-  color: rgba(255,255,255,0.55);
-  letter-spacing: 0.06em;
-  text-align: center;
-}
+        .main { padding: 20px 16px 60px; max-width: 600px; margin: 0 auto; }
 
-/* MAIN */
-.main { padding: 20px 16px 60px; max-width: 600px; margin: 0 auto; }
+        .card {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 24px 20px;
+            margin-bottom: 16px;
+            border: 1px solid var(--border);
+        }
+        .card-title { font-size: 1.15rem; color: var(--teal-deep); margin-bottom: 6px; font-weight: 700; }
+        .card-subtitle { font-size: 0.85rem; color: var(--stone); margin-bottom: 20px; font-style: italic; line-height: 1.5; }
 
-/* CARDS */
-.card {
-  background: var(--white);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 24px 20px;
-  margin-bottom: 16px;
-  border: 1px solid var(--border);
-}
-.card-title {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 1.15rem;
-  color: var(--teal-deep);
-  margin-bottom: 6px;
-  font-weight: 700;
-}
-.card-subtitle {
-  font-size: 0.85rem;
-  color: var(--stone);
-  margin-bottom: 20px;
-  font-style: italic;
-  line-height: 1.5;
-}
+        .privacy-card {
+            background: linear-gradient(135deg, var(--teal-deep), #1a3a3a);
+            border-radius: var(--radius);
+            padding: 24px 20px;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        .privacy-card h2 { font-size: 1.25rem; margin-bottom: 14px; color: var(--gold-light); }
+        .privacy-card p { font-size: 0.9rem; line-height: 1.7; color: rgba(255,255,255,0.88); margin-bottom: 12px; }
+        .privacy-note {
+            background: rgba(255,255,255,0.08);
+            border-left: 3px solid var(--gold);
+            padding: 12px 14px;
+            border-radius: 0 8px 8px 0;
+            margin-top: 14px;
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.8);
+            font-style: italic;
+        }
 
-/* PRIVACY STATEMENT */
-.privacy-card {
-  background: linear-gradient(135deg, var(--teal-deep), #1a3a3a);
-  border-radius: var(--radius);
-  padding: 24px 20px;
-  margin-bottom: 20px;
-  color: #fff;
-  border: none;
-}
-.privacy-card h2 {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 1.25rem;
-  margin-bottom: 14px;
-  color: var(--gold-light);
-}
-.privacy-card p {
-  font-size: 0.9rem;
-  line-height: 1.7;
-  color: rgba(255,255,255,0.88);
-  margin-bottom:
+        .field { margin-bottom: 20px; }
+        label { display: block; font-size: 0.9rem; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+        input[type="text"] {
+            width: 100%; padding: 14px 16px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 1rem; background: var(--parchment);
+        }
+        .code-input { font-family: monospace; font-size: 1.1rem; letter-spacing: 0.12em; text-align: center; text-transform: uppercase; }
+
+        .btn { display: block; width: 100%; padding: 16px 24px; border: none; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; text-align: center; }
+        .btn-primary { background: var(--teal); color: #fff; box-shadow: 0 4px 16px rgba(30,107,107,0.3); }
+        
+        .request-code-container { margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border); text-align: center; }
+        .request-button { display: block; background: var(--stone); color: white; padding: 14px; text-decoration: none; border-radius: 10px; font-weight: 600; margin-bottom: 15px; }
+
+        .alert { padding: 14px 16px; border-radius: 10px; font-size: 0.88rem; margin-bottom: 16px; text-align: center; }
+        .alert-error { background: #fef2f2; border: 1px solid #fca5a5; color: #991b1b; }
+        
+        .required-tag { background: var(--danger); color: #fff; font-size: 0.65rem; padding: 2px 6px; border-radius: 4px; font-weight: 700; margin-left: 6px; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <span class="header-icon">⚖️</span>
+    <div class="org-label">Sonoma County Family Court Awareness</div>
+    <h1>Family Court Accountability Survey</h1>
+</div>
+
+<div class="progress-wrap">
+    <div class="progress-steps" id="progressSteps"></div>
+    <div class="progress-label" id="progressLabel">Access Code — Step 1 of 7</div>
+</div>
+
+<div class="main">
+    <div class="step" id="step-0" style="display: block;">
+        <div class="privacy-card">
+            <h2>You are safe here.</h2>
+            <p>This survey is completely anonymous. Your access code is simply a key to keep data clean — it has no connection to who you are.</p>
+            <div class="privacy-note">Nothing you share here can be traced back to you, your children, or your case.</div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Enter Your Access Code</div>
+            <div class="card-subtitle">Each code is single-use and untraceable.</div>
+            
+            <div id="codeAlert"></div>
+            
+            <div class="field">
+                <label for="accessCode">Access Code <span class="required-tag">Required</span></label>
+                <input type="text" id="accessCode" class="code-input" placeholder="XXXX-XXXX-XXXX" maxlength="14">
+            </div>
+
+            <button class="btn btn-primary" onclick="validateCode()" id="codeBtn">Verify Code & Begin</button>
+
+            <div class="request-code-container">
+                <p style="margin-bottom: 10px;">Don't have an access code?</p>
+                <a href="mailto:scfca.survey@gmail.com?subject=Code Request" class="request-button">Request a Code</a>
+                <p style="font-size: 0.8rem; color: var(--stone); font-style: italic;">Unique codes are sent manually within 24 hours to ensure your privacy.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const SUPABASE_URL = 'https://gjzdpqgbfgzephsqowex.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_wlbUpwYgFlG_Od8fyDBDDg_-fpi9H1U';
+
+    function renderProgress(step) {
+        const wrap = document.getElementById('progressSteps');
+        wrap.innerHTML = '';
+        for (let i = 0; i < 7; i++) {
+            const d = document.createElement('div');
+            d.className = 'prog-dot' + (i === 0 ? ' active' : '');
+            wrap.appendChild(d);
+        }
+    }
+
+    async function validateCode() {
+        const code = document.getElementById('accessCode').value.trim().toUpperCase();
+        const alertEl = document.getElementById('codeAlert');
+        const btn = document.getElementById('codeBtn');
+
+        if (!code || code.length < 14) {
+            alertEl.innerHTML = '<div class="alert alert-error">Please enter a complete code (XXXX-XXXX-XXXX).</div>';
+            return;
+        }
+
+        btn.innerText = 'Verifying...';
+        btn.disabled = true;
+
+        try {
+            const res = await fetch(`${SUPABASE_URL}/rest/v1/access_codes?code=eq.${encodeURIComponent(code)}&select=status`, {
+                headers: { 
+                    'apikey': SUPABASE_KEY, 
+                    'Authorization': `Bearer ${SUPABASE_KEY}` 
+                }
+            });
+            const data = await res.json();
+
+            if (!data || data.length === 0) {
+                alertEl.innerHTML = '<div class="alert alert-error">Code not found. Please check and try again.</div>';
+                btn.innerText = 'Verify Code & Begin';
+                btn.disabled = false;
+            } else if (data[0].status === 'used') {
+                alertEl.innerHTML = '<div class="alert alert-error">This code has already been used.</div>';
+                btn.innerText = 'Verify Code & Begin';
+                btn.disabled = false;
+            } else {
+                alert('Success! Code valid. (Rest of survey steps would load here)');
+            }
+        } catch (err) {
+            alertEl.innerHTML = '<div class="alert alert-error">Connection error. Please try again.</div>';
+            btn.disabled = false;
+        }
+    }
+
+    // Auto-format the input with dashes
+    document.getElementById('accessCode').addEventListener('input', function(e) {
+        let v = e.target.value.replace(/[^A-Z0-9]/gi, '').toUpperCase();
+        if (v.length > 4) v = v.slice(0, 4) + '-' + v.slice(4);
+        if (v.length > 9) v = v.slice(0, 9) + '-' + v.slice(9);
+        e.target.value = v.slice(0, 14);
+    });
+
+    renderProgress(0);
+</script>
+
+</body>
+</html>
