@@ -972,6 +972,13 @@ async function validateCode() {
     });
     const data = await res.json();
 
+    if (!res.ok) {
+      alertEl.innerHTML = `<div class="alert alert-error">Server error (${res.status}): ${data.message || data.hint || JSON.stringify(data)}</div>`;
+      btn.innerHTML = 'Verify Code & Begin';
+      btn.disabled = false;
+      return;
+    }
+
     if (!data || data.length === 0) {
       alertEl.innerHTML = '<div class="alert alert-error">This code was not found. Please check it and try again, or contact the person who gave you the code.</div>';
       btn.innerHTML = 'Verify Code & Begin';
