@@ -855,6 +855,7 @@ const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 const TOTAL_STEPS = 7;
 let currentStep = 0;
 let validatedCode = null;
+let validatedCodeStr = null;
 let selectedJudges = [];
 
 // ---- PROGRESS ----
@@ -994,6 +995,7 @@ async function validateCode() {
     }
 
     validatedCode = data[0].id;
+    validatedCodeStr = data[0].code;
     currentStep = 1;
     showStep(1);
 
@@ -1060,7 +1062,13 @@ async function submitSurvey() {
   alertEl.innerHTML = '';
 
   try {
-    const payload = collectData();
+    const surveyData = collectData();
+    const payload = {
+      survey_data: surveyData,
+      attorney_name: surveyData.petitioner_attorney || surveyData.respondent_attorney || null,
+      judge_name: Array.isArray(surveyData.judges) ? surveyData.judges.join(', ') : (surveyData.judges || null),
+      access_code_used: validatedCodeStr
+    };
 
     // Insert response
     const resInsert = await fetch(`${SUPABASE_URL}/rest/v1/survey_responses`, {
