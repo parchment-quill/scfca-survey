@@ -109,7 +109,7 @@
         input[type="text"] {
             width: 100%; padding: 14px 16px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 1rem; background: var(--parchment);
         }
-        .code-input { font-family: monospace; font-size: 1.1rem; letter-spacing: 0.12em; text-align: center; text-transform: uppercase; }
+        .code-input { font-family: 'Courier New', monospace !important; font-size: 1.1rem !important; letter-spacing: 0.12em; text-align: center; text-transform: uppercase; }
 
         .btn { display: block; width: 100%; padding: 16px 24px; border: none; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; text-align: center; }
         .btn-primary { background: var(--teal); color: #fff; box-shadow: 0 4px 16px rgba(30,107,107,0.3); }
@@ -167,9 +167,9 @@
 </div>
 
 <script>
-    // UPDATED WITH CORRECT KEYS AND DATABASE LOGIC
+    // FIXED KEYS AND LOGIC
     const SUPABASE_URL = 'https://gjzdpqgbfgzephsqowex.supabase.co';
-    const SUPABASE_KEY = 'sb_publishable_wlbUpwYgFlG_Od8fyDBDDg_-fpi9H1UNfU9Vf'; // Full key from your photo
+    const SUPABASE_KEY = 'sb_publishable_wlbUpwYgFlG_Od8fyDBDDg_-fpi9H1UNfU9Vf'; 
 
     function renderProgress(step) {
         const wrap = document.getElementById('progressSteps');
@@ -195,7 +195,7 @@
         btn.disabled = true;
 
         try {
-            // Updated to use 'is_used' instead of 'status' to match your database
+            // Pointing specifically to 'is_used' to match your Supabase table
             const res = await fetch(`${SUPABASE_URL}/rest/v1/access_codes?code=eq.${encodeURIComponent(code)}&select=is_used`, {
                 headers: { 
                     'apikey': SUPABASE_KEY, 
@@ -213,18 +213,18 @@
                 btn.innerText = 'Verify Code & Begin';
                 btn.disabled = false;
             } else {
-                alert('Success! Code valid. (Survey Section 1 is now loading...)');
-                // You can add your code here to show the next survey step
+                alert('Success! Your code is valid. This would now load the survey questions.');
+                // Next step: Show Section 1
             }
         } catch (err) {
-            console.error(err);
-            alertEl.innerHTML = '<div class="alert alert-error">Connection error. Please check your internet or try again later.</div>';
+            console.error('Handshake failed:', err);
+            alertEl.innerHTML = '<div class="alert alert-error">Connection error. Please ensure your internet is on and try again.</div>';
             btn.innerText = 'Verify Code & Begin';
             btn.disabled = false;
         }
     }
 
-    // Auto-format the input with dashes
+    // Auto-format dashes as you type
     document.getElementById('accessCode').addEventListener('input', function(e) {
         let v = e.target.value.replace(/[^A-Z0-9]/gi, '').toUpperCase();
         if (v.length > 4) v = v.slice(0, 4) + '-' + v.slice(4);
